@@ -20,7 +20,11 @@ public class Main {
             System.out.println("8. Ordenar lista por intercambio");
             System.out.println("9. Habilitar/deshabilitar ordenación automática por inserción");
             System.out.println("10. Ordenar lista por Shell");
-            System.out.println("11. Salir");
+            System.out.println("11. Ordenar lista por QuickSort");
+            System.out.println("12. Buscar elemento secuencialmente");
+            System.out.println("13. Buscar elemento binariamente");
+            System.out.println("14. Ordenar lista por selección");
+            System.out.println("15. Salir");
             System.out.print("Ingresa tu elección: ");
 
             opcion = scanner.nextInt();
@@ -66,6 +70,26 @@ public class Main {
                     System.out.println("Lista ordenada por Shell.");
                     break;
                 case 11:
+                    myList.quickSort();
+                    System.out.println("Lista ordenada por QuickSort.");
+                    break;
+                case 12:
+                    System.out.print("Ingresa el valor a buscar: ");
+                    int valorBuscar = scanner.nextInt();
+                    boolean encontrado = myList.sequentialSearch(valorBuscar);
+                    System.out.println("Elemento " + (encontrado ? "encontrado." : "no encontrado."));
+                    break;
+                case 13:
+                    System.out.print("Ingresa el valor a buscar: ");
+                    int valorBuscarBinario = scanner.nextInt();
+                    boolean encontradoBinario = myList.binarySearch(valorBuscarBinario);
+                    System.out.println("Elemento " + (encontradoBinario ? "encontrado." : "no encontrado."));
+                    break;
+                case 14:
+                    myList.selectionSort(); // Nueva opción
+                    System.out.println("Lista ordenada por selección.");
+                    break;
+                case 15:
                     System.out.println("Saliendo...");
                     break;
                 default:

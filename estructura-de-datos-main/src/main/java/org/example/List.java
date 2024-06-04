@@ -212,4 +212,135 @@ public class List<T extends Comparable<T>> {
         return current;
     }
 
+    // Método para ordenar la lista utilizando el algoritmo de ordenación rápida
+    // (quicksort)
+    public void quickSort() {
+        head.setNext(quickSortRec(head.getNext()));
+    }
+
+    // Método recursivo para realizar quicksort en los nodos
+    private Node<T> quickSortRec(Node<T> start) {
+        if (start == null || start.getNext() == null) {
+            return start;
+        }
+
+        Node<T> pivot = start;
+        Node<T> less = null, greater = null;
+        Node<T> current = start.getNext();
+
+        while (current != null) {
+            Node<T> next = current.getNext();
+            if (current.getValue().compareTo(pivot.getValue()) < 0) {
+                current.setNext(less);
+                less = current;
+            } else {
+                current.setNext(greater);
+                greater = current;
+            }
+            current = next;
+        }
+
+        less = quickSortRec(less);
+        greater = quickSortRec(greater);
+
+        return concatenate(less, pivot, greater);
+    }
+
+    // Método auxiliar para concatenar listas
+    private Node<T> concatenate(Node<T> less, Node<T> pivot, Node<T> greater) {
+        if (less == null) {
+            pivot.setNext(greater);
+            return pivot;
+        }
+
+        Node<T> current = less;
+        while (current.getNext() != null) {
+            current = current.getNext();
+        }
+        current.setNext(pivot);
+        pivot.setNext(greater);
+
+        return less;
+    }
+
+    // Método para realizar una búsqueda secuencial
+    public boolean sequentialSearch(T value) {
+        Node<T> current = head.getNext(); // Comienza desde el primer nodo real
+        while (current != null) {
+            if (current.getValue().equals(value)) {
+                return true; // Elemento encontrado
+            }
+            current = current.getNext();
+        }
+        return false; // Elemento no encontrado
+    }
+
+    // Método para convertir la lista enlazada en un array
+    private T[] toArray() {
+        T[] array = (T[]) new Comparable[size];
+        Node<T> current = head.getNext();
+        int index = 0;
+        while (current != null) {
+            array[index++] = current.getValue();
+            current = current.getNext();
+        }
+        return array;
+    }
+
+    // Método para realizar la búsqueda binaria
+    public boolean binarySearch(T value) {
+        // Asegúrate de que la lista esté ordenada antes de realizar la búsqueda binaria
+        quickSort();
+        T[] array = toArray();
+        return binarySearchRec(array, value, 0, size - 1);
+    }
+
+    // Método recursivo para realizar la búsqueda binaria en un array
+    private boolean binarySearchRec(T[] array, T value, int low, int high) {
+        if (low > high) {
+            return false; // Elemento no encontrado
+        }
+
+        int mid = (low + high) / 2;
+
+        if (array[mid].compareTo(value) == 0) {
+            return true; // Elemento encontrado
+        } else if (array[mid].compareTo(value) > 0) {
+            return binarySearchRec(array, value, low, mid - 1);
+        } else {
+            return binarySearchRec(array, value, mid + 1, high);
+        }
+    }
+
+    // Método para ordenar la lista utilizando el algoritmo de ordenación por
+    // selección
+    public void selectionSort() {
+        if (isEmpty()) {
+            System.out.println("La lista está vacía. No se puede ordenar.");
+            return;
+        }
+
+        Node<T> start = head.getNext(); // Inicio real de la lista
+
+        while (start != null) {
+            Node<T> minNode = start;
+            Node<T> current = start.getNext();
+
+            while (current != null) {
+                if (current.getValue().compareTo(minNode.getValue()) < 0) {
+                    minNode = current;
+                }
+                current = current.getNext();
+            }
+
+            // Intercambiar valores del nodo inicial con el nodo mínimo encontrado
+            T temp = start.getValue();
+            start.setValue(minNode.getValue());
+            minNode.setValue(temp);
+
+            // Mover al siguiente nodo
+            start = start.getNext();
+        }
+    }
+
 }
