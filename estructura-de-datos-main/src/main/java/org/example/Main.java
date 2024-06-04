@@ -19,7 +19,8 @@ public class Main {
             System.out.println("7. Verificar si está vacía");
             System.out.println("8. Ordenar lista por intercambio");
             System.out.println("9. Habilitar/deshabilitar ordenación automática por inserción");
-            System.out.println("10. Salir");
+            System.out.println("10. Ordenar lista por Shell");
+            System.out.println("11. Salir");
             System.out.print("Ingresa tu elección: ");
 
             opcion = scanner.nextInt();
@@ -55,10 +56,16 @@ public class Main {
                     System.out.println("Lista ordenada por intercambio.");
                     break;
                 case 9:
-                    myList.toggleInsertionSort(); // Nueva opción: Habilitar/deshabilitar ordenación automática por inserción
-                    System.out.println("Ordenación automática por inserción: " + (myList.isInsertionSortEnabled() ? "Habilitada" : "Deshabilitada"));
+                    myList.toggleInsertionSort(); // Nueva opción: Habilitar/deshabilitar ordenación automática por
+                                                  // inserción
+                    System.out.println("Ordenación automática por inserción: "
+                            + (myList.isInsertionSortEnabled() ? "Habilitada" : "Deshabilitada"));
                     break;
                 case 10:
+                    myList.shellSort();
+                    System.out.println("Lista ordenada por Shell.");
+                    break;
+                case 11:
                     System.out.println("Saliendo...");
                     break;
                 default:

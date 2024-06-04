@@ -2,13 +2,13 @@ package org.example;
 
 public class List<T extends Comparable<T>> {
     private Node<T> head; // Puntero al primer nodo de la lista
-    private int size;     // Número de elementos en la lista
+    private int size; // Número de elementos en la lista
     private boolean insertionSortEnabled; // Bandera para la ordenación automática por inserción
 
     // Constructor para inicializar una lista vacía
     public List() {
         this.head = new Node<>(); // Crea un nodo ficticio como cabeza
-        this.size = 0;            // Inicializa el tamaño en 0
+        this.size = 0; // Inicializa el tamaño en 0
         this.insertionSortEnabled = false; // Ordenación automática por inserción deshabilitada por defecto
     }
 
@@ -22,10 +22,11 @@ public class List<T extends Comparable<T>> {
         return size; // Devuelve el tamaño actual de la lista
     }
 
-    // Método para agregar un nuevo nodo con el valor especificado al final de la lista
+    // Método para agregar un nuevo nodo con el valor especificado al final de la
+    // lista
     public void addToEnd(T value) {
         Node<T> newNode = new Node<>(); // Crea un nuevo nodo
-        newNode.setValue(value);        // Establece su valor
+        newNode.setValue(value); // Establece su valor
 
         Node<T> current = head; // Comienza desde la cabeza
         // Recorre la lista para encontrar el último nodo
@@ -41,13 +42,16 @@ public class List<T extends Comparable<T>> {
         }
     }
 
-    // Método para agregar un nuevo nodo con el valor especificado al inicio de la lista
+    // Método para agregar un nuevo nodo con el valor especificado al inicio de la
+    // lista
     public void prepend(T value) {
         Node<T> newNode = new Node<>(); // Crea un nuevo nodo
-        newNode.setValue(value);        // Establece su valor
-        // Establece el puntero siguiente del nuevo nodo al nodo actualmente en primer lugar
+        newNode.setValue(value); // Establece su valor
+        // Establece el puntero siguiente del nuevo nodo al nodo actualmente en primer
+        // lugar
         newNode.setNext(head.getNext());
-        // Establece el puntero siguiente de la cabeza al nuevo nodo, convirtiéndolo en el nuevo primer nodo
+        // Establece el puntero siguiente de la cabeza al nuevo nodo, convirtiéndolo en
+        // el nuevo primer nodo
         head.setNext(newNode);
         size++; // Aumenta el tamaño de la lista
 
@@ -104,7 +108,8 @@ public class List<T extends Comparable<T>> {
         }
     }
 
-    // Método para ordenar la lista utilizando el algoritmo de intercambio (bubble sort)
+    // Método para ordenar la lista utilizando el algoritmo de intercambio (bubble
+    // sort)
     public void sort() {
         if (isEmpty()) {
             System.out.println("La lista está vacía. No se puede ordenar.");
@@ -132,7 +137,8 @@ public class List<T extends Comparable<T>> {
         } while (swapped);
     }
 
-    // Método para ordenar la lista utilizando el algoritmo de ordenación por inserción
+    // Método para ordenar la lista utilizando el algoritmo de ordenación por
+    // inserción
     public void insertionSort() {
         if (isEmpty()) {
             System.out.println("La lista está vacía. No se puede ordenar.");
@@ -166,8 +172,44 @@ public class List<T extends Comparable<T>> {
         insertionSortEnabled = !insertionSortEnabled;
     }
 
-    // Método para verificar si la ordenación automática por inserción está habilitada
+    // Método para verificar si la ordenación automática por inserción está
+    // habilitada
     public boolean isInsertionSortEnabled() {
         return insertionSortEnabled;
     }
+
+    public void shellSort() {
+        if (isEmpty()) {
+            System.out.println("La lista está vacía. No se puede ordenar.");
+            return;
+        }
+
+        int n = size;
+        int gap = n / 2;
+
+        while (gap > 0) {
+            for (int i = gap; i < n; i++) {
+                Node<T> temp = getNodeAt(i);
+                T tempValue = temp.getValue();
+
+                int j;
+                for (j = i; j >= gap && getNodeAt(j - gap).getValue().compareTo(tempValue) > 0; j -= gap) {
+                    getNodeAt(j).setValue(getNodeAt(j - gap).getValue());
+                }
+                getNodeAt(j).setValue(tempValue);
+            }
+            gap /= 2;
+        }
+    }
+
+    private Node<T> getNodeAt(int index) {
+        Node<T> current = head.getNext();
+        for (int i = 0; i < index; i++) {
+            if (current != null) {
+                current = current.getNext();
+            }
+        }
+        return current;
+    }
+
 }
