@@ -277,6 +277,7 @@ public class List<T extends Comparable<T>> {
 
     // Método para convertir la lista enlazada en un array
     private T[] toArray() {
+        // Crea un array del tamaño de la lista
         T[] array = (T[]) new Comparable[size];
         Node<T> current = head.getNext();
         int index = 0;
